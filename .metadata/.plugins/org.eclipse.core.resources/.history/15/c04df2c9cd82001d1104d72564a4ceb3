@@ -1,0 +1,12 @@
+package com.hotelrating.userservice.exception;
+
+import org.springframework.http.ResponseEntity;
+
+import com.hotelrating.userservice.payload.ApiResponse;
+
+public class GlobalExceptionHandler {
+	public ResponseEntity<ApiResponse> handleResourceNotFoundException(){
+		
+	}
+
+}

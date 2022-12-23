@@ -1,0 +1,5 @@
+package com.hotelrating.userservice.repo;
+
+public interface UserRepo {
+
+}

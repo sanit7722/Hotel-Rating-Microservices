@@ -1,0 +1,5 @@
+package com.hotelrating.userservice.services;
+
+public interface UserService {
+
+}
