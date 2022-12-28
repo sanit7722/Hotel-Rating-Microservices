@@ -10,10 +10,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableEurekaClient
 public class UserMicroserviceApplication {
 	
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(UserMicroserviceApplication.class, args);
