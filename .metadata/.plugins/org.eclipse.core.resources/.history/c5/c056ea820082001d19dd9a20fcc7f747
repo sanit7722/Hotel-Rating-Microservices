@@ -1,5 +1,0 @@
-package com.hotelrating.userservice.entities;
-
-public class User {
-
-}
