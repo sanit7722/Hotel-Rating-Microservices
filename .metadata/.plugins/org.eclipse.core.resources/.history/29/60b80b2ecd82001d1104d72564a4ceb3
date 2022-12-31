@@ -1,5 +1,0 @@
-package com.hotelrating.userservice.payload;
-
-public class ApiResponse {
-
-}

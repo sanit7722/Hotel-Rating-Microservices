@@ -1,5 +1,0 @@
-package com.hotelrating.userservice.exception;
-
-public class ResourceNotFoundException {
-
-}
