@@ -3,6 +3,7 @@ package com.hotelrating.userservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hotelrating.userservice.entities.User;
 import com.hotelrating.userservice.services.UserService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -30,9 +35,24 @@ public class UserController {
 	
 	
 	@GetMapping("/{userId}")
+	@CircuitBreaker(name = "RATING-HOTEL-BREAKER", fallbackMethod = "ratingHotelFallback")
 	public ResponseEntity<User> getUser(@PathVariable String userId){
 		User userById = userService.getUserById(userId);
 		return new ResponseEntity<User>(userById,HttpStatus.OK);
+	}
+	
+	
+	//fallback method for circuit breaker
+	
+	public ResponseEntity<User> ratingHotelFallback(String userId, Exception ex){
+		log.info("Fallback is executed bcause service is down",ex.getMessage());
+		User user = User.builder()
+					.email("dummy@dummy.com")
+					.about("dummy user")
+					.name("dummy")
+					.userId("1234")
+					.build();
+		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 	
 	@GetMapping
