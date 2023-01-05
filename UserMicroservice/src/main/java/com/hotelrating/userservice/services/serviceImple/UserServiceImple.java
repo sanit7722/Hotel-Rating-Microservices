@@ -47,7 +47,20 @@ public class UserServiceImple implements UserService{
 	@Override
 	public List<User> getAllUser() {
 		// TODO Auto-generated method stub
-		return userRepo.findAll();
+		List<User> listOfUsers= userRepo.findAll();
+		listOfUsers.stream().map(user->{
+			Rating[] ratingsOfUser= restTemplate.getForObject("http://RATING-SERVICE/ratings/users/"+user.getUserId(), Rating[].class);
+			List<Rating> ratings = Arrays.stream(ratingsOfUser).toList();
+			List<Rating> list = ratings.stream().map(rating->{
+				//ResponseEntity<Hotel> forEntity = restTemplate.getForEntity("http://HOTEL-SERVICE/hotels/"+rating.getHotelId(), Hotel.class);
+				Hotel hotel = hotelService.getHotel(rating.getHotelId());
+				rating.setHotel(hotel);
+				return rating;
+			}).collect(Collectors.toList());
+			user.setRatings(list);
+			return user;
+		}).collect(Collectors.toList());
+		return listOfUsers;
 	}
 
 	@Override
