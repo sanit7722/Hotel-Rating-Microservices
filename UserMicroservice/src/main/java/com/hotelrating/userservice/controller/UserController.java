@@ -17,6 +17,7 @@ import com.hotelrating.userservice.entities.User;
 import com.hotelrating.userservice.services.UserService;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -35,7 +36,8 @@ public class UserController {
 	
 	
 	@GetMapping("/{userId}")
-	@CircuitBreaker(name = "RATING-HOTEL-BREAKER", fallbackMethod = "ratingHotelFallback")
+	//@CircuitBreaker(name = "RATING-HOTEL-BREAKER", fallbackMethod = "ratingHotelFallback")
+	@RateLimiter(name = "UserRateLimiter", fallbackMethod ="ratingHotelFallback" )
 	public ResponseEntity<User> getUser(@PathVariable String userId){
 		User userById = userService.getUserById(userId);
 		return new ResponseEntity<User>(userById,HttpStatus.OK);
