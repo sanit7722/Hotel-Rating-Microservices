@@ -26,7 +26,7 @@ This app is mainly contains three microservices:
 
 
 ## Contributing
-1. Fork it (<https://github.com/sanit7722/Blogging-Application/fork>)
+1. Fork it (<https://github.com/sanit7722/Hotel-Rating-Microservices/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
